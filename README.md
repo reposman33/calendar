@@ -1,5 +1,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Maak een Kalendar component
+
+Vertoon de huidige maand,dagen van de week, vul evt 'incomplete' weken aan en highlight vandaag.
+Navigeer van maand naar maand en de kalender wordt bijgewerkt;
+Maak een mogelijkheid om alarms te creeeren.
+
+React, StyledComponents
+
+## Yadayaayada
+
 ## Available Scripts
 
 In the project directory, you can run:
