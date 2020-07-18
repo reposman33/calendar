@@ -12,7 +12,7 @@ export const Calendar = styled.div`
 	width: 45vh;
 `;
 
-export const Month = styled.div`
+export const SCMonth = styled.div`
 	align-items: center;
 	box-shadow: 0px 0px 10px 0px #ccc;
 	display: flex;

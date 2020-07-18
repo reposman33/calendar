@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Month } from "./styled/components";
+import { Month } from "./month";
 import { Day } from "./day";
 import { Week } from "./week";
 
