@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Month, Week, Day } from "./styled/components";
+import { Month, Week } from "./styled/components";
+import { Day } from "./day";
 
 export const CalendarWidget = () => {
 	const [monthIncrement, setMonthIncrement] = useState(0);
@@ -19,11 +20,15 @@ export const CalendarWidget = () => {
 
 	for (let i = 0; i < 7; i++) {
 		const dayOfWeek = moment().add(monthIncrement, "M").weekday(i).format("dd");
-		weekDays.push(<Day key={dayOfWeek}>{dayOfWeek}</Day>);
+		weekDays.push(
+			<Day key={dayOfWeek} day={dayOfWeek}>
+				{dayOfWeek}
+			</Day>
+		);
 	}
 
 	for (let i = 0; i < firstWeekDayOfMonth; i++) {
-		week.push(<Day />);
+		week.push(<Day key={"0" + i} />);
 	}
 
 	for (let i = 1; i <= daysInMonth; i++) {
@@ -33,22 +38,16 @@ export const CalendarWidget = () => {
 			week = []; // empty week
 			week.push(
 				// add day to new week
-				<Day key={i} day={i} selected={selected}>
-					{i}
-				</Day>
+				<Day key={i} day={i} selected={selected} />
 			);
 		} else {
-			week.push(
-				<Day key={i} day={i} selected={selected}>
-					{i}
-				</Day>
-			);
+			week.push(<Day key={i} day={i} selected={selected} />);
 		}
 	}
 
 	// add remaining days to week
 	for (let i = week.length; i < 7; i++) {
-		week.push(<Day></Day>);
+		week.push(<Day key={i} />);
 	}
 
 	month.push(week);

@@ -33,7 +33,7 @@ export const Week = styled.div`
 	margin: 1px auto;
 `;
 
-export const Day = styled.span`
+export const SCDay = styled.span`
 	background-color: ${(props) => (props.day ? "#a6c4de" : "#f0f8ff")};
 	cursor: ${(props) => (props.day ? "pointer" : "default")};
 	display: flex;
