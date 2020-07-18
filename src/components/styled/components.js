@@ -24,7 +24,7 @@ export const Month = styled.div`
 	width: 275px;
 `;
 
-export const Week = styled.div`
+export const SCWeek = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;

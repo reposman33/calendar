@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Month, Week } from "./styled/components";
+import { Month } from "./styled/components";
 import { Day } from "./day";
+import { Week } from "./week";
 
 export const CalendarWidget = () => {
 	const [monthIncrement, setMonthIncrement] = useState(0);
