@@ -1,11 +1,15 @@
 import React from "react";
 import { CalendarWidget } from "./components/calendar";
+import { CalendarContextProvider } from "./contexts";
+
 import "./App.css";
 
 function App() {
 	return (
 		<div className='container'>
-			<CalendarWidget />
+			<CalendarContextProvider>
+				<CalendarWidget />
+			</CalendarContextProvider>
 		</div>
 	);
 }

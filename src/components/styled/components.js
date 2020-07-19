@@ -22,6 +22,17 @@ export const SCMonth = styled.div`
 	margin: 1rem;
 	padding: 0.5rem;
 	width: 275px;
+
+	& > :first-child > span {
+		:first-of-type {
+			cursor: pointer;
+			margin-right: 0.8rem;
+		}
+		:last-of-type {
+			cursor: pointer;
+			margin-left: 0.8rem;
+		}
+	}
 `;
 
 export const SCWeek = styled.div`
