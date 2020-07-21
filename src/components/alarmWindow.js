@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { CalendarContext } from "../contexts";
+import { Alarm } from "./alarm";
 
-export const AlarmWindow = (props) => {
-	const { I18n } = useContext(CalendarContext);
-	const { hideAlarmWindow } = useContext(CalendarContext);
-
-	const StyledDiv = styled.div`
+const StyledDiv = styled.div`
 	background-color: #e0e6ec;
 	box-shadow: 0px 0px 10px 5px rgba(105, 105, 107, 1);
 	display: flex;
@@ -89,7 +86,49 @@ export const AlarmWindow = (props) => {
 		}
 	}
 }
-    `;
+	`;
+
+export const AlarmWindow = ({ description, level, time, title }) => {
+	const [alarmTime, setAlarmTime] = useState(time);
+	const [alarmTitle, setAlarmTitle] = useState(title);
+	const [alarmDescription, setAlarmDescription] = useState(description);
+	const [alarmLevel, setAlarmLevel] = useState(level);
+
+	const { I18n } = useContext(CalendarContext);
+	const { hideAlarmWindow } = useContext(CalendarContext);
+	const { alarms, updateAlarms } = useContext(CalendarContext);
+
+	const onChange = (e) => {
+		switch (e.target.name) {
+			case "alarmTime":
+				setAlarmTime(e.target.value);
+				break;
+			case "alarmTitle":
+				setAlarmTitle(e.target.value);
+				break;
+			case "alarmDescription":
+				setAlarmDescription(e.target.value);
+				break;
+			case "alarmLevel":
+				setAlarmLevel(e.target.value);
+				break;
+			default:
+				console.log(e.target.name, " not defined");
+		}
+	};
+
+	const addToAlarms = () => {
+		updateAlarms([
+			...alarms,
+			{
+				alarmTime,
+				alarmTitle,
+				alarmDescription,
+				alarmLevel,
+			},
+		]);
+		hideAlarmWindow();
+	};
 
 	return (
 		<StyledDiv>
@@ -100,30 +139,69 @@ export const AlarmWindow = (props) => {
 				</span>
 			</div>
 			<div className='alarmTime'>
-				<label>{I18n.get("ALARMWINDOW.ALARMTIME.LABEL")}</label> <input type='datetime-local' />
+				<label>{I18n.get("ALARMWINDOW.ALARMTIME.LABEL")}</label>
+				<input name='alarmTime' type='datetime-local' onChange={onChange} value={alarmTime} disabled={!!time} />
 			</div>
 			<div className='alarmTitle'>
 				<label>{I18n.get("ALARMWINDOW.ALARMTITLE.LABEL")}:</label>
-				<input type='text' />
+				<input
+					type='text'
+					name='alarmTitle'
+					onChange={onChange}
+					value={alarmTitle}
+					key='test'
+					disabled={!!title}
+				/>
 			</div>
 			<label>{I18n.get("ALARMWINDOW.DESCRIPTION.LABEL")}:</label>
-			<textarea className='alarmDescription'></textarea>
+			<textarea
+				className='alarmDescription'
+				name='alarmDescription'
+				onChange={onChange}
+				value={alarmDescription}
+				disabled={!!description}></textarea>
+			<div>
+				<label htmlFor='alarmLevel'> {I18n.get("ALARMWINDOW.ALARMLEVEL.TITLE")}</label>
+				<div>
+					<input
+						type='radio'
+						name='alarmLevel'
+						id='alarmLevelLow'
+						value='low'
+						onChange={onChange}
+						disabled={!!level && !!alarmLevel}
+						checked={alarmLevel === "low"}
+					/>
+					<label htmlFor='alarmLevelLow'> {I18n.get("ALARMWINDOW.ALARMLEVEL.LEVELLOW.LABEL")}</label>
+					<input
+						type='radio'
+						name='alarmLevel'
+						id='alarmLevelMedium'
+						value='medium'
+						onChange={onChange}
+						disabled={!!level && !!alarmLevel}
+						checked={alarmLevel === "medium"}
+					/>
+					<label htmlFor='alarmLevelMedium'>{I18n.get("ALARMWINDOW.ALARMLEVEL.LEVELMODERATE.LABEL")}</label>
+					<input
+						type='radio'
+						name='alarmLevel'
+						id='alarmLevelHigh'
+						value='high'
+						onChange={onChange}
+						disabled={!!level && !!alarmLevel}
+						checked={alarmLevel === "high"}
+					/>
+					<label htmlFor='alarmLevelHigh'>{I18n.get("ALARMWINDOW.ALARMLEVEL.LEVELHIGH.LABEL")}</label>
+				</div>
+			</div>
 			<div className='buttons'>
 				<button className='cancel' onClick={hideAlarmWindow}>
 					{I18n.get("ALARMWINDOW.BUTTON.CANCEL.TEXT")}
 				</button>
-				<button className='save'> {I18n.get("ALARMWINDOW.BUTTON.SAVE.TEXT")}</button>
-			</div>
-			<div>
-				<label htmlFor='alarmLevel'> {I18n.get("ALARMWINDOW.ALARMLEVEL.TITLE")}</label>
-				<div>
-					<input type='radio' name='alarmLevel' id='alarmLevelLow' value='low' />
-					<label htmlFor='alarmLevelLow'> {I18n.get("ALARMWINDOW.ALARMLEVEL.LEVELLOW.LABEL")}</label>
-					<input type='radio' name='alarmLevel' id='alarmLevelModerate' value='moderate' />
-					<label htmlFor='alarmLevelModerate'>{I18n.get("ALARMWINDOW.ALARMLEVEL.LEVELMODERATE.LABEL")}</label>
-					<input type='radio' name='alarmLevel' id='alarmLevelHigh' value='high' />
-					<label htmlFor='alarmLevelHigh'>{I18n.get("ALARMWINDOW.ALARMLEVEL.LEVELHIGH.LABEL")}</label>
-				</div>
+				<button className='save' onClick={addToAlarms}>
+					{I18n.get("ALARMWINDOW.BUTTON.SAVE.TEXT")}
+				</button>
 			</div>
 		</StyledDiv>
 	);
